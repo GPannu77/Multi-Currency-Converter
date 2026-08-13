@@ -1,13 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multi-Currency Converter</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exchange — Multi-Currency Converter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <script src="index.js"></script>
+<div class="board">
+  <div class="eyebrow"><span>Bureau de Change</span><span>No. 0417</span></div>
+
+  <div class="ticket">
+    <div class="ticket-top">
+      <h1 class="headline">Currency exchange</h1>
+      <p class="sub">Enter an amount, choose two currencies, convert.</p>
+    </div>
+
+    <form id="convertForm" novalidate>
+      <div class="field">
+        <label for="amount">Amount</label>
+        <div class="amount-wrap">
+          <span class="curr-tag" id="fromTag">$</span>
+          <input type="number" id="amount" placeholder="0.00" step="0.01" min="0" required>
+        </div>
+      </div>
+
+      <div class="pair-row">
+        <div class="select-wrap">
+          <label for="fromCurrency">From</label>
+          <select id="fromCurrency" required>
+            <option value="USD">USD — US Dollar</option>
+            <option value="EUR">EUR — Euro</option>
+            <option value="GBP">GBP — British Pound</option>
+            <option value="JPY">JPY — Japanese Yen</option>
+            <option value="AUD">AUD — Australian Dollar</option>
+            <option value="CAD">CAD — Canadian Dollar</option>
+          </select>
+        </div>
+
+        <button type="button" class="swap-btn" id="swapBtn" aria-label="Swap currencies">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 10L3 6L7 2"></path><path d="M3 6H16C18 6 20 7.5 20 10"></path>
+            <path d="M17 14L21 18L17 22"></path><path d="M21 18H8C6 18 4 16.5 4 14"></path>
+          </svg>
+        </button>
+
+        <div class="select-wrap">
+          <label for="toCurrency">To</label>
+          <select id="toCurrency" required>
+            <option value="EUR">EUR — Euro</option>
+            <option value="USD">USD — US Dollar</option>
+            <option value="GBP">GBP — British Pound</option>
+            <option value="JPY">JPY — Japanese Yen</option>
+            <option value="AUD">AUD — Australian Dollar</option>
+            <option value="CAD">CAD — Canadian Dollar</option>
+          </select>
+        </div>
+      </div>
+
+      <p class="error" id="errorMsg">Enter an amount greater than zero.</p>
+
+      <button type="submit" class="submit">Convert</button>
+    </form>
+
+    <div class="perf"></div>
+
+    <div class="stub">
+      <p class="placeholder" id="placeholderText">Your converted amount will appear here.</p>
+      <div class="result-row" id="resultRow">
+        <div class="result-figure"><span class="tag" id="toTagOut"></span><span id="resultFigure"></span></div>
+        <p class="rate-note" id="rateNote"></p>
+      </div>
+    </div>
+  </div>
+
+  <footer>Illustrative rates · not for trading use</footer>
+</div>
+
+<script src="index.js"></script>
 </body>
 </html>
