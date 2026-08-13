@@ -16,7 +16,29 @@ const resultRow = document.getElementById('resultRow');
 const resultFigure = document.getElementById('resultFigure');
 const toTagOut = document.getElementById('toTagOut');
 const rateNote = document.getElementById('rateNote');
- 
+
+function updateFromTag(){
+  fromTag.textContent = SYMBOLS[fromSelect.value] || '$';
+}
+
+fromSelect.addEventListener('change', updateFromTag);
+updateFromTag();
+
+swapBtn.addEventListener('click', () => {
+  const f = fromSelect.value;
+  fromSelect.value = toSelect.value;
+  toSelect.value = f;
+  updateFromTag();
+  if (resultRow.classList.contains('show')) form.requestSubmit();
+});
+
+function showError(message){
+  errorMsg.textContent = message;
+  errorMsg.classList.add('show');
+  resultRow.classList.remove('show');
+  placeholderText.style.display = 'block';
+}
+
 form.addEventListener('submit', async event => {
     event.preventDefault();
 
@@ -24,8 +46,14 @@ form.addEventListener('submit', async event => {
     const fromCurrency = fromSelect.value;
     const toCurrency = toSelect.value;
 
+    if (!amount || amount <= 0 || isNaN(amount)){
+    showError('Enter an amount greater than zero.');
+    return;
+    }
+
     try {
         const data = await getExchangeRate();
+        console.log(data);
         displayResult(data, amount, fromCurrency, toCurrency);
     }catch (error) {
         console.error(error);
