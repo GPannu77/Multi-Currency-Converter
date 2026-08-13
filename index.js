@@ -51,6 +51,12 @@ form.addEventListener('submit', async event => {
     return;
     }
 
+    errorMsg.classList.remove('show');
+
+    placeholderText.style.display = 'block';
+    placeholderText.textContent = 'Fetching latest rates…';
+    resultRow.classList.remove('show');
+
     try {
         const data = await getExchangeRate();
         console.log(data);
@@ -70,4 +76,19 @@ async function getExchangeRate() {
     return await response.json();
 }
 
-function displayResult(data, amount, fromCurrency, toCurrency) {}
+function displayResult(data, amount, fromCurrency, toCurrency) {
+    const rates = data.rates;
+
+    if (!rates || !rates[fromCurrency] || !rates[toCurrency]) {
+        placeholderText.textContent = 'Currency not supported.';
+        return;
+    }
+
+    const rate = rates[toCurrency] / rates[fromCurrency];
+    const convertedAmount = amount * rate;
+
+    placeholderText.style.display = 'none';
+    resultRow.classList.add('show');
+    toTagOut.textContent = `${SYMBOLS[toCurrency] || ''} ${convertedAmount.toFixed(2)}`;
+    toTagOut.style.fontSize = '1.25rem';
+}
