@@ -109,7 +109,6 @@ input#amount{
   font-weight:500;
   color: var(--ink);
   width:100%;
-  -moz-appearance: textfield;
 }
 input#amount::-webkit-outer-spin-button,
 input#amount::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
